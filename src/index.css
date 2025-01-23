@@ -1,3 +1,4 @@
+/* Basic reset and body styling */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,11 +6,236 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #f7fafc; /* Light gray background */
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+h1, h2 {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Container and page centering */
+.container {
+  max-width: 900px; /* Restrict the width of the content */
+  margin-top: 40px; /* Add space at the top */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 1rem; /* Add some padding on sides */
+}
+
+/* Title section at the top */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Task list styling */
+ul {
+  list-style-type: none;
+  padding: 0;
+  max-width: 800px; /* Restrict task list width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Task Item Styling */
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Task Content: Title and Description Block */
+.task-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 10px; /* Add some space for the checkbox */
+}
+.task-content h2,
+.task-content p {
+  margin: 8px;
+  padding: 0; 
+  line-height: 1.4; 
+}
+
+.task-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0px;
+}
+
+/* Task description styling */
+.task-item .task-description {
+  color: #4a5568;
+  font-size: 0.95rem;
+  max-width: 100%; /* Ensure the description only takes up 50% of the task card */
+  padding-left: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis; /* Truncate overflow text with ellipsis */
+  white-space: normal; /* Allow text to wrap within the box */
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2; /* Limit to two lines */
+  -webkit-box-orient: vertical;
+}
+
+/* Checkbox and Done Label */
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  font-size: 1rem; /* Increase font size for the "Done?" text */
+}
+
+.checkbox-container input[type="checkbox"] {
+  width: 24px; /* Increase the size of the checkbox */
+  height: 24px; /* Increase the size of the checkbox */
+  margin-bottom: 8px; /* Add spacing below the checkbox */
+}
+
+.checkbox-container label {
+  font-size: 1.1rem;
+  color: #4a5568;
+}
+
+/* Buttons Styling */
+.task-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center; 
+  margin-left: 10px;
+}
+
+
+.task-item button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.task-item button.edit {
+  background-color: #e2b97f;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.task-item button.edit:hover {
+  background-color: #d58c3e;
+}
+
+.task-item button.delete {
+  background-color: #e53e3e;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.task-item button.delete:hover {
+  background-color: #c53030;
+}
+
+
+/* Invisible task list when no tasks */
+ul.empty, h1.empty {
+  display: none;
+}
+
+/* Form Styling */
+form {
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 1rem 2rem 2rem 2rem;
+  margin: 1rem 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+form h2 {
+  margin-top: 0;
+  padding-top: 0;
+  margin-bottom: 1rem; 
+}
+
+input, textarea {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+  border-color: #3182ce;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(51, 132, 206, 0.5);
+}
+
+button {
+  background-color: #3182ce;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2b6cb0;
+}
+
+button:active {
+  background-color: #2b6cb0;
+  transform: translateY(1px);
+}
+
+/* Modal Styling */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .completed-task {

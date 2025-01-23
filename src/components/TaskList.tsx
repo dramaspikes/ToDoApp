@@ -13,6 +13,7 @@ interface Task {
 const TaskList: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [editingTask, setEditingTask] = useState<Task | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         loadTasks();
@@ -34,6 +35,7 @@ const TaskList: React.FC = () => {
 
     const handleEdit = (task: Task) => {
         setEditingTask(task);
+        setIsModalOpen(true);
     };
 
     const handleCompleteToggle = async (task: Task) => {
@@ -53,36 +55,37 @@ const TaskList: React.FC = () => {
     
     return (
         <div className="max-w-4xl mx-auto">
-            <h1 className="text-2xl font-bold text-center mb-4">Task List</h1>
-            <ul className="space-y-4">
+            <h1 className={`text-2xl font-bold text-center ${tasks.length === 0 ? 'empty' : ''}`}>Task List</h1>
+            <ul className={` ${tasks.length === 0 ? 'empty' : ''}`}>
                 {tasks.map((task) => (
-                    <li key={task.id} className="bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
+                    <li key={task.id} className="task-item">
+                        <div className="task-content">
+                            <h2 className={`text-lg font-semibold ${task.isCompleted ? 'completed-task' : ''}`}>
+                                {task.title}
+                            </h2>
+                            <p className={`text-gray-700 task-description ${task.isCompleted ? 'completed-task' : ''}`}>
+                                {task.description}
+                            </p>
+                        </div>
+                        <div className="checkbox-container">
+                            <label>Done?</label>
                             <input
                                 type="checkbox"
                                 checked={task.isCompleted}
                                 onChange={() => handleCompleteToggle(task)}
                                 className="w-5 h-5 cursor-pointer accent-green-500"
                             />
-                            <div>
-                                <h2 className={`text-lg font-semibold transition-all ${
-        task.isCompleted ? 'completed-task' : ''
-    }`}>
-                                    {task.title}
-                                </h2>
-                                <p className="text-gray-700">{task.description}</p>
-                            </div>
                         </div>
-                        <div className="flex space-x-2">
+                        <div className="task-actions">
                             <button 
                                 onClick={() => handleEdit(task)}
-                                className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition-all"
+                                className="edit"
                             >
                                 Edit
                             </button>
                             <button 
                                 onClick={() => handleDelete(task.id)}
-                                className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition-all"
+                                className="delete"
                             >
                                 Delete
                             </button>
@@ -100,9 +103,22 @@ const TaskList: React.FC = () => {
                     }}
                 />
             )}
+            {isModalOpen && (
+                <div className="modal active">
+                    <div className="modal-content">
+                        <TaskForm
+                            taskToEdit={editingTask}
+                            onTaskCreated={() => {
+                                setEditingTask(null);
+                                loadTasks();
+                                setIsModalOpen(false); // Close modal after task update
+                            }}
+                        />
+                    </div>
+                </div>
+            )}
         </div>
     );
-    
 };
 
 export default TaskList;
